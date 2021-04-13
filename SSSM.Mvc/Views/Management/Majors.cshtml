@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SSSM.Mvc.Models.MajorModel>
+
+@{
+    var index = 1;
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h5>专业</h5>
+</div>
+<div class="container">
+    <form method="post" asp-action="MajorsCreate" class="card p-2 mb-3 shadow-sm needs-validation">
+        <div class="input-group">
+            <input type="text" value="" name="majorname" class="form-control" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @(index++)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a asp-action="MajorsDelete" asp-route-id="@item.Id" class="text-danger">删除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

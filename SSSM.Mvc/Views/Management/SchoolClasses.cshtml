@@ -1,0 +1,54 @@
+﻿@using SSSM.Mvc.Infrastructure
+@model List<SchoolClassModel>
+@{
+    var context = ViewData["context"] as AppDbContext;
+    var grades = context.schoolGrades.ToList().Select(x => new SelectListItem { Value = x.Name, Text = x.Name }).ToList();
+    var index = 1;
+}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h5>班级</h5>
+</div>
+
+<div class="container">
+    <form method="post" asp-action="SchoolClassesAdd" class="card p-2 mb-3 shadow-sm needs-validation">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">年级</span>
+            </div>
+            <select name="gradename" class="custom-select" asp-items="grades"></select>
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">班级</span>
+            </div>
+            <input name="classname" type="text" value="" class="form-control" />
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <table class="table-sm table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>年级</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sc in Model)
+                {
+                    <tr>
+                        <td>@(index++)</td>
+                        <td>@sc.Name</td>
+                        <td>@sc.SchoolGrade</td>
+                        <td>
+                            <a asp-action="SchoolClassesDelete" asp-route-id="@sc.Id" class="btn btn-sm btn-outline-danger">删除</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
